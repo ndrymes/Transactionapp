@@ -8,4 +8,10 @@ router.post('/',async(req,res) => {
  res.send(retwallet)
 })
 
+router.post('/transfer',async(req,res) => {
+    const retwallet = await newallet.fundWallet(req,res)
+    console.log(retwallet);
+    
+})
+
 module.exports  =router

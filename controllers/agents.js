@@ -63,36 +63,7 @@ class AgentController {
     
     }
       
-    async fundWallet(req,res){
-        console.log('res');
-        
-        const {amount,wallet,pin}= req.body
-        const params = {
-            amount,
-            wallet,
-            pin,
-        }
-        console.log(params.amount);
-        
-        if (isNaN(params.amount)) {
-            res.status(400).send('please insert number')
-        }
-        try {
-            const retwallet = await agent.checkWalletdetails(params.wallet)
-            if (!retwallet) {
-                res.status(404).send('wallet not found')
-                
-            }
-            res.status(200).send({token})
-            
-          return retwallet
-        } catch (error) {
-            console.log(error);
-            
-        }
-        
-        
-    }
+    
 }
 
 module.exports = AgentController

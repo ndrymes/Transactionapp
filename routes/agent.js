@@ -31,7 +31,5 @@ router.post('/login', async (req,res) => {
     //   })
     // }
 })
- router.post('/transfer',(req,res) => {
-     agent.fundWallet(req,res)
- })
+ 
 module.exports = router
