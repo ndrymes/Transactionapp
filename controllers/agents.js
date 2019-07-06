@@ -1,10 +1,17 @@
 const AgentServices = require('../services/agent')
+const tokenGen = require('../utils/walletKeyGen')
+const Wallet = require('../model/wallet')
 const agent = new AgentServices()
 const Agent = require('../model/agent')
-console.log(agent);
+console.log(AgentServices);
+
+
 
 const _ = require('lodash')
 const generateRandomNumber = require('../utils/digitGenerator')
+const token = generateRandomNumber()
+
+
 
 class AgentController {
     async signUp(req, res){
@@ -23,10 +30,10 @@ class AgentController {
         
         
         try {
-             const tt = await agent.saveData(params)
-            console.log(tt)
+             const save_data = await agent.saveData(params)
+            console.log(save_data)
             return res.status(201).send({
-                tt
+                save_data
             })
         } catch (error) {
             console.log('This error occured', error)
@@ -44,7 +51,6 @@ class AgentController {
          password
      };
     var agent = await Agent.verifyDetails(params.email,params.password)
-    console.log(agent);
     
     res.status(200).send({
         error: false,
@@ -52,8 +58,40 @@ class AgentController {
         message: 'Agent logged in successfully',
         data: agent
     })
+    req.user =agent
     return agent
     
+    }
+      
+    async fundWallet(req,res){
+        console.log('res');
+        
+        const {amount,wallet,pin}= req.body
+        const params = {
+            amount,
+            wallet,
+            pin,
+        }
+        console.log(params.amount);
+        
+        if (isNaN(params.amount)) {
+            res.status(400).send('please insert number')
+        }
+        try {
+            const retwallet = await agent.checkWalletdetails(params.wallet)
+            if (!retwallet) {
+                res.status(404).send('wallet not found')
+                
+            }
+            res.status(200).send({token})
+            
+          return retwallet
+        } catch (error) {
+            console.log(error);
+            
+        }
+        
+        
     }
 }
 

@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const _ = require('lodash')
 const AgentController = require('../controllers/agents')
+console.log(AgentController);
+
 const agent = new AgentController()
 
 router.post('/signup', (req,res) => {
@@ -29,4 +31,7 @@ router.post('/login', async (req,res) => {
     //   })
     // }
 })
+ router.post('/transfer',(req,res) => {
+     agent.fundWallet(req,res)
+ })
 module.exports = router

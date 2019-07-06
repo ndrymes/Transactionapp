@@ -1,10 +1,13 @@
+const AgentService = require('../services/agent')
+console.log(AgentService);
 const mongoose = require('mongoose')
 const validator = require('validator')
-const {AgentServices} = require('../services/agent')
+
 const bcrypt = require('bcrypt')
 
- const wer = new AgentServices()
- console.log(wer);
+
+
+ 
 
 
 var agentSchema = new mongoose.Schema({
@@ -55,7 +58,7 @@ agentSchema.statics.verifyDetails = async function (email,password) {
     if (!isMatch) {
         throw new Error('user not found')
     }
-     new AgentServices().updatedLogginDetails(email)
+    //  new AgentServices().updatedLogginDetails(email)
     console.log(user);
     
     return user
