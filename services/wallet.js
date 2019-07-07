@@ -19,9 +19,10 @@ class walletServices {
             {error}
             
         }
-  
-
-
 }
+async updateWalletAmount (){
+    f
+}
+
 }
 module.exports =walletServices
