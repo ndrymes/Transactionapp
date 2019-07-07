@@ -9,7 +9,8 @@ console.log(AgentServices);
 
 const _ = require('lodash')
 const generateRandomNumber = require('../utils/digitGenerator')
-const token = generateRandomNumber()
+
+
 
 
 
@@ -31,10 +32,22 @@ class AgentController {
         
         try {
              const save_data = await agent.saveData(params)
-            console.log(save_data)
+             if(!save_data){
+                 res.status(400).send('Cant Sign up, make sure your details are correct')
+             }
+             
+             
+             const token = await save_data.generateAuthtoken()
+              
+             
             return res.status(201).send({
-                save_data
+                error: false,
+                code: 200,
+                message: 'Agent Signed up successfully',
+                data: save_data,
+                 token
             })
+            
         } catch (error) {
             console.log('This error occured', error)
             res.status(500).send({
@@ -50,14 +63,27 @@ class AgentController {
          email,
          password
      };
-    var agent = await Agent.verifyDetails(params.email,params.password)
+    var ret_agent = await Agent.verifyDetails(params.email,params.password)
+    if (!ret_agent) {
+        res.status(400).send('User not found')
+    }
+    try {
+          const token = await ret_agent.generateAuthtoken()
+          res.header('Auth',token).status(200).send({
+            error: false,
+            code: 200,
+            message: 'Agent logged in successfully',
+            data: agent,
+             token
+        })
+    } catch (error) {
+        res.status(500).send({error})
+    }
     
-    res.status(200).send({
-        error: false,
-        code: 200,
-        message: 'Agent logged in successfully',
-        data: agent
-    })
+    
+    
+    // console.log(token);
+    
     req.user =agent
     return agent
     

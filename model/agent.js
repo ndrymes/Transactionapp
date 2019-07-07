@@ -1,14 +1,9 @@
 const AgentService = require('../services/agent')
-console.log(AgentService);
+const config = require('config')
 const mongoose = require('mongoose')
 const validator = require('validator')
-
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-
-
-
- 
-
 
 var agentSchema = new mongoose.Schema({
 
@@ -42,13 +37,21 @@ var agentSchema = new mongoose.Schema({
         loggedIn:{
             type:Boolean,
             default:false
-        }
+        },
+        tokens:[{
+            token:{
+                type:String,
+                required:true
+            }
+        }]
 
 
     })
 agentSchema.statics.verifyDetails = async function (email,password) {
     try {
         const user = await Agent.findOne({email})
+        console.log(user);
+        
         
         
         if (!user) {
@@ -69,6 +72,13 @@ agentSchema.statics.verifyDetails = async function (email,password) {
     }
     
     
+}
+agentSchema.methods.generateAuthtoken = async function(){
+const agent = this
+const token = jwt.sign({_id:agent._id},process.env.ACCESS_KEY)
+// agent.tokens = agent.tokens.concat({token})
+return token
+// await agent.save()
 }
 
 agentSchema.pre('save',function (next) {

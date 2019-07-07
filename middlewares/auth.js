@@ -1,34 +1,26 @@
 const Agent = require('../model/agent')
 const bcrypt = require('bcrypt')
-const verifyDetails= async(req,res,next,)=>{
-    
-    const email =req.email
-    const password= req.password
-    console.log(email);
-    
+const jwt = require('jsonwebtoken')
+const authMidleware = async (req,res,next) => {
+    const token = req.header('Auth')
+    if(!token){
+        res.status(401).send({error:"Acess denied,no token provided"})
+    }
     try {
-        const user = await Agent.findOne({email})
+        const decoded =jwt.verify(token,process.env.ACCESS_KEY)
+        console.log(decoded);
         
-        
-        if (!user) {
-            throw new Error('user not found')
-        }
-        const isMatch = await bcrypt.compare(password,user.password)
-    if (!isMatch) {
-        throw new Error('user not found')
-    }
-    //  new AgentServices().updatedLogginDetails(email)
-    console.log(user);
-    next()
-    
-    
-    return user
-
+        req.user=decoded
+        next()
     } catch (error) {
-        console.log(error);
         
+        
+        res.status(400).send('Acess denied,invalid token')
+
     }
     
+
 }
 
-module.exports = verifyDetails
+
+module.exports = authMidleware

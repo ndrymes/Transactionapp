@@ -66,5 +66,18 @@ class WalletController{
         
         
     }
+    async verifyToken(req,res) {
+        const {token_} = req.body
+        const params = {
+            token_
+        }
+    if (token_ === token) {
+         
+        wallet.updateWalletAmount()
+        
+    }
+      const newtoken = req.bod
+
+    }
 }
 module.exports = WalletController
