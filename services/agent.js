@@ -1,4 +1,5 @@
 const Agent = require('../model/agent')
+const Wallet = require('../model/wallet')
 
 class AgentServices {
  
@@ -7,7 +8,6 @@ class AgentServices {
     }
 
     updatedLogginDetails(email){
-        console.log('er');
         
         try {
             return Agent.findOneAndUpdate({email}, {$set:{loggedIn:true}})
@@ -15,6 +15,10 @@ class AgentServices {
             throw new Error('email is not valid')
         }
         
+    }
+    
+    async verifyAuth(){
+        const agent = Agent.fi
     }
 }
 module.exports = AgentServices
