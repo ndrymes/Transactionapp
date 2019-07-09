@@ -20,8 +20,10 @@ class walletServices {
             
         }
 }
-async updateWalletAmount (){
-    f
+async updateWalletAmount (_id,balance){
+    
+    
+    return Wallet.findByIdAndUpdate(_id, {$inc:{balance}})
 }
 
 }

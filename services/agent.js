@@ -18,7 +18,7 @@ class AgentServices {
     }
     
     async verifyAuth(){
-        const agent = Agent.fi
+        const agent = Agent.find
     }
 }
 module.exports = AgentServices

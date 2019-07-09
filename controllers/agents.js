@@ -27,9 +27,13 @@ class AgentController {
             password,
             _id,
         }
-        
-        
-        
+        if (isNaN(params.pin)) {
+            res.status(400).send('Please enter number for your pin')
+        }
+         if (params.pin.length !=4) {
+            res.status(400).send('your pin must be 4 digit')
+            
+        }
         try {
              const save_data = await agent.saveData(params)
              if(!save_data){

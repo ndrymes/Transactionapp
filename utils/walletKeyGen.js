@@ -1,4 +1,4 @@
 const tokenGen = () =>{
-    return Math.floor(1000 + Math.random() * 90000000)
+    return Math.floor(1000 + Math.random() * 900000)
 }
 module.exports = tokenGen

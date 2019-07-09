@@ -17,7 +17,7 @@ app.use('/agent',agent)
 app.use('/wallet',wallet)
 
 if (!process.env.ACCESS_KEY) {
-    console.error("FATAL ERROR,jwt is not defined")
+    console.error("FATAL ERROR,ACCESS_KEY is not defined")
     process.exit(1)
 }
 
