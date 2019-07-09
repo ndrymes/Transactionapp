@@ -12,7 +12,10 @@ router.post('/',auth,async(req,res) => {
 router.post('/transfer',auth,async(req,res) => {
     const retwallet = await newallet.fundWallet(req,res)
     console.log(retwallet);
-    
+
+})
+router.post('/final',async (req,res) => {
+    const retwallet = await newallet.verifyToken(req,res)
 })
 
 module.exports  =router
